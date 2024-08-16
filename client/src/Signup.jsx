@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function Signup() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('https://localhost:5001/register',{name,email,password})
+    .then(results => console.log(results))
+    .catch(err => console.log(err))
+  };
 
-    const [name,setName]=useState();
-    const [email,setEmail]=useState();;
-    const [password,setPassword]=useState();
   return (
     <div style={{
       display: 'flex',
@@ -23,7 +30,7 @@ function Signup() {
         textAlign: 'center'
       }}>
         <h2>Register</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3 text-start">
             <label htmlFor="name" className="form-label">
               <strong>Name</strong>
@@ -34,6 +41,8 @@ function Signup() {
               autoComplete="off"
               name="name"
               className="form-control rounded-0"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-3 text-start">
@@ -46,6 +55,8 @@ function Signup() {
               autoComplete="off"
               name="email"
               className="form-control rounded-0"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3 text-start">
@@ -58,17 +69,20 @@ function Signup() {
               autoComplete="off"
               name="password"
               className="form-control rounded-0"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button type="submit" className="btn btn-primary w-100 rounded-0">
             Sign Up
           </button>
         </form>
-        <p>Already have an account</p>
-        <button><a href="/login">Login</a></button>
+        <p>Already have an account?</p>
+        <button className="btn btn-link"><a href="/login">Login</a></button>
       </div>
     </div>
   );
 }
 
 export default Signup;
+// The Signup component is a functional component that renders a form with three input fields: name, email, and password. The component uses the useState hook to manage the form data. When the form is submitted, the handleSubmit function is called to handle the form submission.
